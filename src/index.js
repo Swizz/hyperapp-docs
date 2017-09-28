@@ -12,15 +12,14 @@ const RAW_HOST = "https://raw.githubusercontent.com"
 const replaceLinks = (content, path) =>
   content.replace(
     /\/docs\/(.+)\.md/g,
-    path.base.concat(path.release, "$1").join("/")
+    ["#", path.release, "$1"].join("/")
   )
 
 app({
   state: {
     path: {
-      base: location.pathname.split("/").slice(0, 2),
-      release: location.pathname.split("/")[2],
-      document: location.pathname.split("/").slice(3)
+      release: location.hash.split(/[\/\#]/)[2],
+      document: location.hash.split(/[\/\#]/).slice(3)
     },
     releases: [],
     content: "",
@@ -29,7 +28,15 @@ app({
   actions: {
     selectRelease(state, actions, event) {
       const release = event.target.value
-      location.pathname = state.path.base.concat(release, state.path.document).join("/")
+      location.hash = ["#", release].concat(state.path.document).join("/")
+    },
+    updatePath(state, actions) {
+      return {
+        path: {
+          release: location.hash.split(/[\/\#]/)[2],
+          document: location.hash.split(/[\/\#]/).slice(3)
+        }
+      }
     },
     fetch: {
       releases(state, actions) {
@@ -66,14 +73,21 @@ app({
       actions.fetch.releases()
       actions.fetch.menu()
       actions.fetch.content()
+
+      window.addEventListener("hashchange", () => {
+        actions.updatePath()
+        actions.fetch.menu()
+        actions.fetch.content()
+      })
     },
     update(state, actions) {
       if (state.releases.length === 0) {
         return
       }
       if (!state.path.release || !state.path.document || state.path.document[0] === "") {
-        location.pathname = state.path.base.concat(
-          !state.path.release ? state.releases[0] : state.path.release,
+        location.hash = ["#",
+          !state.path.release ? state.releases[0] : state.path.release
+        ].concat(
           !state.path.document.length || state.path.document[0] === "" ? "getting-started" : state.path.document
         ).join("/")
       }
