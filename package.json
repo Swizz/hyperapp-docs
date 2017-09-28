@@ -1,0 +1,48 @@
+{
+  "name": "hyperapp-docs",
+  "version": "1.0.0",
+  "description": "Hyperapp Docs",
+  "main": "src/index.js",
+  "keywords": ["hyperapp"],
+  "watch": {
+    "static": {
+      "patterns": "static",
+      "extensions": "*",
+      "quiet": true
+    },
+    "bundle": {
+      "patterns": "src",
+      "extensions": "*.{css,js}",
+      "quiet": true
+    },
+    "server": {
+      "patterns": "package.json",
+      "quiet": true
+    }
+  },
+  "scripts": {
+    "static": "ncp static dist",
+    "bundle": "rollup -c -i src/index.js -o dist/index.js",
+    "server": "http-server-spa dist",
+    "build": "npm run static && npm run bundle",
+    "start": "npm-watch"
+  },
+  "devDependencies": {
+    "http-server-spa": "^1.2.0",
+    "ncp": "^2.0.0",
+    "npm-watch": "^0.1.9",
+    "postcss-nested": "^2.0.2",
+    "rollup": "^0.43.0",
+    "rollup-plugin-buble": "^0.15.0",
+    "rollup-plugin-commonjs": "^8.0.2",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "rollup-plugin-postcss": "^0.5.3",
+    "rollup-plugin-uglify": "^2.0.1"
+  },
+  "dependencies": {
+    "@hyperapp/html": "^0.2.0",
+    "hyperapp": "0.9.3"
+  },
+  "author": "Swizz",
+  "license": "MIT"
+}
