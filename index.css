@@ -16,33 +16,35 @@ body {
 
 main {
   display: flex;
+}
 
-  > nav {
+main > nav {
     flex: 1;
     margin: 21px;
 
-    a {
+    font-size: 0;
+  }
+
+main > nav a {
       display: block;
     }
-    ul~a, ul~em>a {
+
+main > nav ul~a, main > nav ul~em>a {
       margin-left: 50px;
     }
 
-    font-size: 0;
-    a, h1, option, li, span {
+main > nav a, main > nav h1, main > nav option, main > nav li, main > nav span {
       font-size: initial;
     }
-  }
 
-  > section {
+main > section {
     height: 100vh;
     overflow: auto;
     width: 80%;
     padding: 21px;
+  }
 
-    pre {
+main > section pre {
       background: #fafafa;
       padding: 5px;
     }
-  }
-}
