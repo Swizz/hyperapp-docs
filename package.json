@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Hyperapp Docs",
   "main": "src/index.js",
-  "keywords": ["hyperapp"],
+  "keywords": [
+    "hyperapp"
+  ],
   "watch": {
     "static": {
       "patterns": "static",
@@ -41,7 +43,8 @@
   },
   "dependencies": {
     "@hyperapp/html": "^0.2.0",
-    "hyperapp": "0.9.3"
+    "hyperapp": "^0.12.1",
+    "snarkdown": "^1.2.2"
   },
   "author": "Swizz",
   "license": "MIT"
