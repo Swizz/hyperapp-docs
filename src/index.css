@@ -44,5 +44,9 @@ main {
       background: #fafafa;
       padding: 5px;
     }
+
+    > div {
+      max-width: 1200px;
+    }
   }
 }

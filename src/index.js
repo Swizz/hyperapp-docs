@@ -2,6 +2,7 @@ import { h, app } from "hyperapp"
 import { main, nav, section, select, option, div, span } from "@hyperapp/html"
 
 import snarkdown from 'snarkdown'
+import codepen from './codepen'
 
 import "./index.css"
 
@@ -14,6 +15,15 @@ const replaceLinks = (content, path) =>
     /\/docs\/(.+)\.md/g,
     ["#", path.release, "$1"].join("/")
   )
+
+const replacePen = (content, pen) =>
+  content.replace(
+    /\[.*\]\(https:\/\/codepen.io\/hyperapp\/pen\/(.*)\?.*\)/g,
+    Codepen("$1")
+  )
+
+const Codepen = (penId) =>
+  `<br/><p data-height="500" data-slug-hash="${penId}" data-default-tab="js,result" data-user="hyperapp" data-embed-version="2" class="codepen"></p>`
 
 app({
   state: {
@@ -106,11 +116,14 @@ app({
           }
         }),
       ]),
-      section({
-        onupdate: element => {
-          element.innerHTML = snarkdown(replaceLinks(state.content, state.path))
-        }
-      })
+      section([
+        div({
+          onupdate: element => {
+            element.innerHTML = snarkdown(replacePen(replaceLinks(state.content, state.path)))
+            codepen()
+          }
+        })
+      ])
     ])
   }
 })
