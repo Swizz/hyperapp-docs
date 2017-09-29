@@ -48,3 +48,7 @@ main > section pre {
       background: #fafafa;
       padding: 5px;
     }
+
+main > section > div {
+      max-width: 1200px;
+    }
